@@ -6,7 +6,7 @@ class SideBar extends Component {
   render() {
     return (
       <div
-        className="d-flex flex-column flex-shrink-0 p-3 bg-light"
+        className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar"
         style={{ width: 280 + "px", height: 100 + "vh" }}
       >
         <a
@@ -110,10 +110,10 @@ class SideBar extends Component {
   }
 }
 
-const routes = (
-  <BrowserRouter>
-    <Switch></Switch>
-  </BrowserRouter>
-);
+// const routes = (
+//   <BrowserRouter>
+//     <Switch></Switch>
+//   </BrowserRouter>
+// );
 
 export default SideBar;

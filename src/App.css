@@ -37,6 +37,17 @@
   }
 }
 
-#root {
-  height: 100%;
+.app-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.sidebar {
+  grid-column: 1/6;
+  grid-row: 1/12;
+}
+
+.search-bar {
+  grid-column: 3/5;
+  grid-row: 2;
 }
