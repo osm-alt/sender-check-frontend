@@ -1,1 +1,1 @@
-Sender check frontend website
+SenderCheck frontend website
