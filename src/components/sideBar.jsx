@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class SideBar extends Component {
   state = {};
@@ -9,63 +9,63 @@ class SideBar extends Component {
         className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar"
         style={{ width: 280 + "px", height: 100 + "vh" }}
       >
-        <a
-          href="/"
+        <NavLink
+          to="/"
           className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
         >
           <span className="fs-4">SenderCheck</span>
-        </a>
+        </NavLink>
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <a href="#" className="nav-link active" aria-current="page">
+            <NavLink to="/" className="nav-link" aria-current="page">
               <i
                 className="bi pe-none me-2 bi-house"
                 width="16"
                 height="16"
               ></i>
               Home
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="nav-link link-dark">
+            <NavLink to="trusted_senders" className="nav-link">
               <i
                 className="bi pe-none me-2 bi-check2-circle"
                 width="16"
                 height="16"
               ></i>
               Trusted Senders
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="nav-link link-dark">
+            <NavLink to="untrusted_senders" className="nav-link">
               {/* <svg className="bi pe-none me-2" width="16" height="16">
                 <use xlinkHref="#table"></use>
               </svg> */}
-              Orders
-            </a>
+              Untrusted Senders
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="nav-link link-dark">
+            <NavLink to="trusted_domains" className="nav-link">
               {/* <svg className="bi pe-none me-2" width="16" height="16">
                 <use xlinkHref="#grid"></use>
               </svg> */}
-              Products
-            </a>
+              Trusted Domains
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="nav-link link-dark">
+            <NavLink to="untrusted_domains" className="nav-link">
               {/* <svg className="bi pe-none me-2" width="16" height="16">
                 <use xlinkHref="#people-circle"></use>
               </svg> */}
-              Customers
-            </a>
+              Untrusted Domains
+            </NavLink>
           </li>
         </ul>
         <hr />
         <div className="dropdown">
-          <a
-            href="#"
+          <NavLink
+            to="#"
             className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -77,31 +77,26 @@ class SideBar extends Component {
               height="32"
               className="rounded-circle me-2"
             />
-            <strong>mdo</strong>
-          </a>
+            <strong>Username</strong>
+          </NavLink>
           <ul className="dropdown-menu text-small shadow">
             <li>
-              <a className="dropdown-item" href="#">
-                New project...
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
+              <NavLink className="dropdown-item" to="settings">
                 Settings
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <NavLink className="dropdown-item" to="profile">
                 Profile
-              </a>
+              </NavLink>
             </li>
             <li>
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <NavLink className="dropdown-item" to="sign_out">
                 Sign out
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -109,11 +104,5 @@ class SideBar extends Component {
     );
   }
 }
-
-// const routes = (
-//   <BrowserRouter>
-//     <Switch></Switch>
-//   </BrowserRouter>
-// );
 
 export default SideBar;

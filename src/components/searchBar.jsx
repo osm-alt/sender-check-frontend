@@ -8,8 +8,8 @@ class SearchBar extends Component {
         <input
           type="text"
           className="form-control"
-          placeholder="Recipient's username"
-          aria-label="Recipient's username"
+          placeholder="Sender's name"
+          aria-label="Sender's name"
           aria-describedby="button-addon2"
         />
         <button
@@ -17,7 +17,7 @@ class SearchBar extends Component {
           type="button"
           id="button-addon2"
         >
-          Button
+          Search
         </button>
       </div>
     );
