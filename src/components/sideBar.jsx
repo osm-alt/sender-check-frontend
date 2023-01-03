@@ -112,6 +112,25 @@ class SideBar extends Component {
               Untrusted Domains
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="permitted_users"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link text-white"
+              }
+            >
+              <i
+                className="bi pe-none me-2 bi-people-fill"
+                width="16"
+                height="16"
+              ></i>
+              Permitted Users
+            </NavLink>
+          </li>
         </ul>
         <hr />
         <div className="dropdown">
