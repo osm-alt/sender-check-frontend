@@ -18,7 +18,16 @@ class SideBar extends Component {
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <NavLink to="/" className="nav-link" aria-current="page">
+            <NavLink
+              to="/"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link link-dark"
+              }
+            >
               <i
                 className="bi pe-none me-2 bi-house"
                 width="16"
@@ -28,7 +37,16 @@ class SideBar extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to="trusted_senders" className="nav-link">
+            <NavLink
+              to="trusted_senders"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link link-dark"
+              }
+            >
               <i
                 className="bi pe-none me-2 bi-check2-circle"
                 width="16"
@@ -38,7 +56,16 @@ class SideBar extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to="untrusted_senders" className="nav-link">
+            <NavLink
+              to="untrusted_senders"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link link-dark"
+              }
+            >
               {/* <svg className="bi pe-none me-2" width="16" height="16">
                 <use xlinkHref="#table"></use>
               </svg> */}
@@ -46,7 +73,16 @@ class SideBar extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to="trusted_domains" className="nav-link">
+            <NavLink
+              to="trusted_domains"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link link-dark"
+              }
+            >
               {/* <svg className="bi pe-none me-2" width="16" height="16">
                 <use xlinkHref="#grid"></use>
               </svg> */}
@@ -54,7 +90,16 @@ class SideBar extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to="untrusted_domains" className="nav-link">
+            <NavLink
+              to="untrusted_domains"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link link-dark"
+              }
+            >
               {/* <svg className="bi pe-none me-2" width="16" height="16">
                 <use xlinkHref="#people-circle"></use>
               </svg> */}
