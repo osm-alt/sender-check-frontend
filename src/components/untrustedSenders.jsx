@@ -3,7 +3,7 @@ import SearchBar from "./searchBar";
 import SendersTable from "./sendersTable";
 import "../App.css";
 
-class TrustedSenders extends Component {
+class UntrustedSenders extends Component {
   state = {};
   render() {
     return (
@@ -15,4 +15,4 @@ class TrustedSenders extends Component {
   }
 }
 
-export default TrustedSenders;
+export default UntrustedSenders;

@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import SearchBar from "./searchBar";
-import SendersTable from "./sendersTable";
+import DomainList from "./domainList";
 import "../App.css";
 
-class TrustedSenders extends Component {
+class UntrustedDomains extends Component {
   state = {};
   render() {
     return (
       <React.Fragment>
-        <SearchBar placeholder_value="Sender's name" />
-        <SendersTable />
+        <SearchBar placeholder_value="Email domain name" />
+        <DomainList />
       </React.Fragment>
     );
   }
 }
 
-export default TrustedSenders;
+export default UntrustedDomains;

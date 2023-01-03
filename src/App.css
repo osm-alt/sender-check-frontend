@@ -59,6 +59,6 @@
 }
 
 .home {
-  grid-column: 4/auto;
+  grid-column: 3/auto;
   grid-row: 3;
 }
