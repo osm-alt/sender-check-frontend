@@ -40,10 +40,11 @@
 .app-grid {
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(6, auto);
 }
 
 .sidebar {
-  grid-column: 1/6;
+  grid-column: 1;
   grid-row: 1/12;
 }
 

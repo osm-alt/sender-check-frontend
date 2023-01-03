@@ -48,7 +48,7 @@ class SideBar extends Component {
               }
             >
               <i
-                className="bi pe-none me-2 bi-check2-circle"
+                className="bi pe-none me-2 bi-person-check"
                 width="16"
                 height="16"
               ></i>
@@ -66,9 +66,11 @@ class SideBar extends Component {
                   : "nav-link link-dark"
               }
             >
-              {/* <svg className="bi pe-none me-2" width="16" height="16">
-                <use xlinkHref="#table"></use>
-              </svg> */}
+              <i
+                className="bi pe-none me-2 bi-person-exclamation"
+                width="16"
+                height="16"
+              ></i>
               Untrusted Senders
             </NavLink>
           </li>
@@ -83,9 +85,11 @@ class SideBar extends Component {
                   : "nav-link link-dark"
               }
             >
-              {/* <svg className="bi pe-none me-2" width="16" height="16">
-                <use xlinkHref="#grid"></use>
-              </svg> */}
+              <i
+                className="bi pe-none me-2 bi-envelope-check"
+                width="16"
+                height="16"
+              ></i>
               Trusted Domains
             </NavLink>
           </li>
@@ -100,9 +104,11 @@ class SideBar extends Component {
                   : "nav-link link-dark"
               }
             >
-              {/* <svg className="bi pe-none me-2" width="16" height="16">
-                <use xlinkHref="#people-circle"></use>
-              </svg> */}
+              <i
+                className="bi pe-none me-2 bi-envelope-exclamation"
+                width="16"
+                height="16"
+              ></i>
               Untrusted Domains
             </NavLink>
           </li>
