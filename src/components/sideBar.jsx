@@ -6,12 +6,12 @@ class SideBar extends Component {
   render() {
     return (
       <div
-        className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar"
+        className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar"
         style={{ width: 280 + "px", height: 100 + "vh" }}
       >
         <NavLink
           to="/"
-          className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+          className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
         >
           <span className="fs-4">SenderCheck</span>
         </NavLink>
@@ -25,11 +25,11 @@ class SideBar extends Component {
                   ? "active nav-link"
                   : isPending
                   ? "pending nav-link"
-                  : "nav-link link-dark"
+                  : "nav-link text-white"
               }
             >
               <i
-                className="bi pe-none me-2 bi-house"
+                className="bi pe-none me-2 bi-house-fill"
                 width="16"
                 height="16"
               ></i>
@@ -44,11 +44,11 @@ class SideBar extends Component {
                   ? "active nav-link"
                   : isPending
                   ? "pending nav-link"
-                  : "nav-link link-dark"
+                  : "nav-link text-white"
               }
             >
               <i
-                className="bi pe-none me-2 bi-person-check"
+                className="bi pe-none me-2 bi-person-fill-check"
                 width="16"
                 height="16"
               ></i>
@@ -63,11 +63,11 @@ class SideBar extends Component {
                   ? "active nav-link"
                   : isPending
                   ? "pending nav-link"
-                  : "nav-link link-dark"
+                  : "nav-link text-white"
               }
             >
               <i
-                className="bi pe-none me-2 bi-person-exclamation"
+                className="bi pe-none me-2 bi-person-fill-exclamation"
                 width="16"
                 height="16"
               ></i>
@@ -82,11 +82,11 @@ class SideBar extends Component {
                   ? "active nav-link"
                   : isPending
                   ? "pending nav-link"
-                  : "nav-link link-dark"
+                  : "nav-link text-white"
               }
             >
               <i
-                className="bi pe-none me-2 bi-envelope-check"
+                className="bi pe-none me-2 bi-envelope-check-fill"
                 width="16"
                 height="16"
               ></i>
@@ -101,11 +101,11 @@ class SideBar extends Component {
                   ? "active nav-link"
                   : isPending
                   ? "pending nav-link"
-                  : "nav-link link-dark"
+                  : "nav-link text-white"
               }
             >
               <i
-                className="bi pe-none me-2 bi-envelope-exclamation"
+                className="bi pe-none me-2 bi-envelope-exclamation-fill"
                 width="16"
                 height="16"
               ></i>
@@ -117,7 +117,7 @@ class SideBar extends Component {
         <div className="dropdown">
           <NavLink
             to="#"
-            className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+            className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
