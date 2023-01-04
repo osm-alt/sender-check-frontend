@@ -6,7 +6,7 @@ class PermittedUsers extends Component {
   render() {
     return (
       <React.Fragment>
-        <div class="col-lg-6 mx-auto title">
+        <div className="col-lg-6 mx-auto title">
           <h1>Permitted Users</h1>
         </div>
         <SearchBar placeholder_value="Username" />
