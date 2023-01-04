@@ -14,7 +14,32 @@ class SendersTable extends Component {
         <tbody>
           <tr>
             <td>Omar Majzoub</td>
-            <td>osm@hotmail.com</td>
+            <td>
+              <ul className="list-group">
+                <li className="list-group-item d-flex justify-content-between align-items-start">
+                  <span className="mt-1">osm@hotmail.com</span>
+
+                  <button className="btn btn-danger">
+                    <i
+                      className="bi pe-none bi-trash-fill"
+                      width="16"
+                      height="16"
+                    ></i>
+                  </button>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-start">
+                  <span className="mt-1">osm@hotmail.com</span>
+
+                  <button className="btn btn-danger">
+                    <i
+                      className="bi pe-none bi-trash-fill"
+                      width="16"
+                      height="16"
+                    ></i>
+                  </button>
+                </li>
+              </ul>
+            </td>
           </tr>
         </tbody>
       </table>

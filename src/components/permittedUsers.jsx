@@ -18,7 +18,16 @@ class PermittedUsers extends Component {
           </thead>
           <tbody>
             <tr>
-              <td>Omar Majzoub</td>
+              <td className="d-flex justify-content-between align-items-start">
+                <span className="mt-1">Omar Majzoub</span>
+                <button className="ms-5 btn btn-danger">
+                  <i
+                    className="bi pe-none bi-trash-fill"
+                    width="16"
+                    height="16"
+                  ></i>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

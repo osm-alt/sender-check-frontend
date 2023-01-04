@@ -38,6 +38,7 @@
 
 .app-grid {
   display: grid;
+  column-gap: 1rem;
   grid-template-columns: repeat(8, auto);
 }
 
@@ -67,3 +68,12 @@
   margin-bottom: 1em;
   text-align: center;
 }
+
+.trash {
+  text-align: center;
+}
+
+.senders-table ol li {
+  margin-bottom: 1em; 
+}
+
