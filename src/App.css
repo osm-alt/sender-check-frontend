@@ -59,7 +59,7 @@
 }
 
 .home {
-  grid-column: 3/auto;
+  grid-column: 5/auto;
   grid-row: 3;
 }
 
