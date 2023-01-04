@@ -8,6 +8,9 @@ class TrustedSenders extends Component {
   render() {
     return (
       <React.Fragment>
+        <div class="col-lg-6 mx-auto title">
+          <h1>Trusted Senders</h1>
+        </div>
         <SearchBar placeholder_value="Sender's name" />
         <SendersTable />
       </React.Fragment>
