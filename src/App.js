@@ -8,6 +8,7 @@ import UntrustedSenders from "./components/untrustedSenders";
 import TrustedDomains from "./components/trustedDomains";
 import UntrustedDomains from "./components/untrustedDomains";
 import PermittedUsers from "./components/permittedUsers";
+import Login from "./components/login";
 
 function App() {
   return <div className="app-grid">{routes}</div>;
