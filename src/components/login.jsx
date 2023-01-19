@@ -81,6 +81,8 @@ function sendCredentials(event, setErrorMessage) {
         );
       } else if (result.message) {
         setErrorMessage(result.message);
+      } else if (result.access_token && result.refresh_token) {
+        console.log(result);
       }
     })
     .catch((error) => console.log("error", error));
