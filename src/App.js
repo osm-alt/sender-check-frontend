@@ -11,7 +11,8 @@ import PermittedUsers from "./components/permittedUsers";
 import Login from "./components/login";
 
 function App() {
-  return <div className="app-grid">{routes}</div>;
+  return <Login />;
+  //  <div className="app-grid">{routes}</div>;
 }
 
 const routes = (

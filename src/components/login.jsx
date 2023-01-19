@@ -1,40 +1,91 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Login extends Component {
-  state = {};
-  render() {
-    return (
-      <div className="login">
-        <form>
-          <img className="mb-4" src="" alt="" />
-          <h1 className="h3 mb-5 fw-normal">Login</h1>
+function Login() {
+  const [errorMessage, setErrorMessage] = useState("");
 
-          <div className="form-floating mb-3">
-            <input
-              type="email"
-              className="form-control"
-              id="floatingInput"
-              placeholder="name@example.com"
-            />
-            <label htmlFor="floatingInput">Email address</label>
-          </div>
-          <div className="form-floating mb-5 flex-grow:5">
-            <input
-              type="password"
-              className="form-control"
-              id="floatingPassword"
-              placeholder="Password"
-            />
-            <label htmlFor="floatingPassword">Password</label>
-          </div>
+  return (
+    <div className="login">
+      <form
+        onSubmit={(e) => {
+          sendCredentials(e, setErrorMessage);
+        }}
+      >
+        <img className="mb-4" src="" alt="" />
+        <h1 className="h3 mb-5 fw-normal">Login</h1>
+        <div className="mb-4 text-danger">{errorMessage}</div>
+        <div className="form-floating mb-3">
+          <input
+            type="email"
+            className="form-control"
+            id="floatingInput"
+            placeholder="name@example.com"
+            name="user_email"
+            required
+          />
+          <label htmlFor="floatingInput">Email address</label>
+        </div>
+        <div className="form-floating mb-5 flex-grow:5">
+          <input
+            type="password"
+            className="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+            name="password"
+            minLength={5}
+            required
+          />
+          <label htmlFor="floatingPassword">Password</label>
+        </div>
 
-          <button className="btn btn-lg btn-primary mb-3" type="submit">
-            Sign in
-          </button>
-        </form>
-      </div>
-    );
-  }
+        <button type="submit" className="btn btn-lg btn-primary mb-3">
+          Sign in
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function sendCredentials(event, setErrorMessage) {
+  event.preventDefault();
+
+  let form = document.querySelector("form");
+
+  //make a JS object from the form inputs to send them as JSON later
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const button = document.querySelector("button");
+
+  button.disabled = true;
+
+  var raw = JSON.stringify(data);
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("http://localhost:4000/users/login", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.details) {
+        setErrorMessage(
+          result.details[0].message
+            .replace(/"user_email"/, "Email address")
+            .replace(/"password"/, "Password")
+        );
+      } else if (result.message) {
+        setErrorMessage(result.message);
+      }
+    })
+    .catch((error) => console.log("error", error));
+
+  button.disabled = false;
 }
 
 export default Login;
