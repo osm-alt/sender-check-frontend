@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Login from "./components/login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SignUp from "./components/signUp";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,6 +17,7 @@ root.render(
       <Routes>
         <Route path="*" element={<App />} exact={true} />
         <Route path="/login" element={<Login />} />
+        <Route path="/sign_up" element={<SignUp />} exact={true} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

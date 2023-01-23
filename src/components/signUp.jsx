@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate, Navigate, NavLink } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const loggedInUser = localStorage.getItem("sc_authenticated");
 
   if (loggedInUser) {
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/sign_out" />;
   }
 
   return (
@@ -19,8 +19,31 @@ const Login = () => {
         }}
       >
         <img className="mb-4" src="" alt="" />
-        <h1 className="h3 mb-5 fw-normal">Login</h1>
+        <h1 className="h3 mb-5 fw-normal">Sign Up</h1>
         <div className="mb-4 text-danger">{errorMessage}</div>
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className="form-control"
+            id="floatingInput"
+            placeholder="John"
+            name="first_name"
+            required
+          />
+          <label htmlFor="floatingInput">First name</label>
+        </div>
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className="form-control"
+            id="floatingInput"
+            placeholder="Doe"
+            name="last_name"
+            required
+          />
+          <label htmlFor="floatingInput">Last name</label>
+        </div>
+
         <div className="form-floating mb-3">
           <input
             type="email"
@@ -32,7 +55,7 @@ const Login = () => {
           />
           <label htmlFor="floatingInput">Email address</label>
         </div>
-        <div className="form-floating mb-4 flex-grow:5">
+        <div className="form-floating mb-5 flex-grow:5">
           <input
             type="password"
             className="form-control"
@@ -44,11 +67,9 @@ const Login = () => {
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
-        <div className="mb-5">
-          New user? <NavLink to="../sign_up">Create an account</NavLink>
-        </div>
+
         <button type="submit" className="btn btn-lg btn-primary mb-3">
-          Sign in
+          Register
         </button>
       </form>
     </div>
@@ -103,4 +124,4 @@ function sendCredentials(event, setErrorMessage, navigate) {
   button.disabled = false;
 }
 
-export default Login;
+export default SignUp;
