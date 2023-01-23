@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  const loggedInUser = localStorage.getItem("sc_authenticated");
+
+  if (loggedInUser) {
+    return <Navigate replace to="/" />;
+  }
 
   return (
     <div className="login">

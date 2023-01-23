@@ -36,6 +36,25 @@ class SideBar extends Component {
               Home
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink
+              to="/lists"
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "active nav-link"
+                  : isPending
+                  ? "pending nav-link"
+                  : "nav-link text-white"
+              }
+            >
+              <i
+                className="bi pe-none me-2 bi-card-list"
+                width="16"
+                height="16"
+              ></i>
+              Choose a list
+            </NavLink>
+          </li>
           <li>
             <NavLink
               to="trusted_senders"
