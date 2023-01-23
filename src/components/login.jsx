@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div className="login">
       <form
         onSubmit={(e) => {
-          sendCredentials(e, setErrorMessage);
+          sendCredentials(e, setErrorMessage, navigate);
         }}
       >
         <img className="mb-4" src="" alt="" />
@@ -43,9 +45,9 @@ function Login() {
       </form>
     </div>
   );
-}
+};
 
-function sendCredentials(event, setErrorMessage) {
+function sendCredentials(event, setErrorMessage, navigate) {
   event.preventDefault();
 
   let form = document.querySelector("form");
@@ -82,7 +84,10 @@ function sendCredentials(event, setErrorMessage) {
       } else if (result.message) {
         setErrorMessage(result.message);
       } else if (result.access_token && result.refresh_token) {
-        console.log(result);
+        localStorage.setItem("sc_acc_token", result.access_token);
+        localStorage.setItem("sc_ref_token", result.refresh_token);
+        localStorage.setItem("sc_authenticated", true);
+        navigate("/");
       }
     })
     .catch((error) => console.log("error", error));

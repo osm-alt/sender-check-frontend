@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import SideBar from "./components/sideBar";
 import Home from "./components/home";
 import TrustedSenders from "./components/trustedSenders";
@@ -8,15 +8,19 @@ import UntrustedSenders from "./components/untrustedSenders";
 import TrustedDomains from "./components/trustedDomains";
 import UntrustedDomains from "./components/untrustedDomains";
 import PermittedUsers from "./components/permittedUsers";
-import Login from "./components/login";
 
-function App() {
-  return <Login />;
-  //  <div className="app-grid">{routes}</div>;
-}
+const App = () => {
+  const loggedInUser = localStorage.getItem("sc_authenticated");
+
+  if (!loggedInUser) {
+    return <Navigate replace to="/login" />;
+  } else {
+    return <div className="app-grid">{routes}</div>;
+  }
+};
 
 const routes = (
-  <BrowserRouter>
+  <>
     <SideBar />
     <Routes>
       <Route path="/" element={<Home />} exact={true} />
@@ -46,7 +50,7 @@ const routes = (
         exact={true}
       />
     </Routes>
-  </BrowserRouter>
+  </>
 );
 
 export default App;

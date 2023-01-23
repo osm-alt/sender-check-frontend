@@ -6,11 +6,18 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import Login from "./components/login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<App />} exact={true} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
