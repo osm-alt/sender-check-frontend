@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const loggedInUser = localStorage.getItem("sc_authenticated");
@@ -25,7 +26,7 @@ const SignUp = () => {
           <input
             type="text"
             className="form-control"
-            id="floatingInput"
+            id="floatingInput-fname"
             placeholder="John"
             name="first_name"
             required
@@ -36,7 +37,7 @@ const SignUp = () => {
           <input
             type="text"
             className="form-control"
-            id="floatingInput"
+            id="floatingInput-lname"
             placeholder="Doe"
             name="last_name"
             required
@@ -48,14 +49,14 @@ const SignUp = () => {
           <input
             type="email"
             className="form-control"
-            id="floatingInput"
+            id="floatingInput-email"
             placeholder="name@example.com"
             name="user_email"
             required
           />
           <label htmlFor="floatingInput">Email address</label>
         </div>
-        <div className="form-floating mb-5 flex-grow:5">
+        <div className="form-floating mb-3 flex-grow:5">
           <input
             type="password"
             className="form-control"
@@ -63,11 +64,34 @@ const SignUp = () => {
             placeholder="Password"
             name="password"
             minLength={5}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             required
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
-
+        <div className="form-floating mb-5 flex-grow:5">
+          <input
+            type="password"
+            className="form-control"
+            id="floatingRetypePassword"
+            placeholder="Re-type password"
+            name="retype_password"
+            minLength={5}
+            onChange={(e) => {
+              if (e.target.value !== password) {
+                setErrorMessage("Passwords do not match");
+                document.querySelector("button").disabled = true;
+              } else {
+                setErrorMessage("");
+                document.querySelector("button").disabled = false;
+              }
+            }}
+            required
+          />
+          <label htmlFor="floatingPassword">Re-type password</label>
+        </div>
         <button type="submit" className="btn btn-lg btn-primary mb-3">
           Register
         </button>
@@ -78,6 +102,8 @@ const SignUp = () => {
 
 function sendCredentials(event, setErrorMessage, navigate) {
   event.preventDefault();
+
+  let success = false;
 
   let form = document.querySelector("form");
 
@@ -101,22 +127,33 @@ function sendCredentials(event, setErrorMessage, navigate) {
     redirect: "follow",
   };
 
-  fetch("http://localhost:4000/users/login", requestOptions)
-    .then((response) => response.json())
+  fetch("http://localhost:4000/users", requestOptions)
+    .then((response) => {
+      if (response.status === 201) {
+        navigate("/login");
+        success = true;
+        return;
+      } else {
+        return response.json();
+      }
+    })
     .then((result) => {
-      if (result.details) {
-        setErrorMessage(
-          result.details[0].message
-            .replace(/"user_email"/, "Email address")
-            .replace(/"password"/, "Password")
-        );
-      } else if (result.message) {
-        setErrorMessage(result.message);
-      } else if (result.access_token && result.refresh_token) {
-        localStorage.setItem("sc_acc_token", result.access_token);
-        localStorage.setItem("sc_ref_token", result.refresh_token);
-        localStorage.setItem("sc_authenticated", true);
-        navigate("/");
+      if (!success) {
+        if (result.details) {
+          setErrorMessage(
+            result.details[0].message
+              .replace(/"first_name"/, "First name")
+              .replace(/"last_name"/, "Last name")
+              .replace(/"user_email"/, "Email address")
+              .replace(/"password"/, "Password")
+              .replace(
+                /"retype_password" must be \[ref:password\]/,
+                "Passwords do not match"
+              )
+          );
+        } else if (result.message) {
+          setErrorMessage(result.message);
+        }
       }
     })
     .catch((error) => console.log("error", error));
