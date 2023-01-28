@@ -166,7 +166,7 @@ class SideBar extends Component {
               height="32"
               className="rounded-circle me-2"
             />
-            <strong>Username</strong>
+            <strong>{localStorage.getItem("sc_user")}</strong>
           </NavLink>
           <ul className="dropdown-menu text-small shadow">
             <li>

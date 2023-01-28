@@ -91,7 +91,12 @@ function sendCredentials(event, setErrorMessage, navigate) {
         );
       } else if (result.message) {
         setErrorMessage(result.message);
-      } else if (result.access_token && result.refresh_token) {
+      } else if (
+        result.access_token &&
+        result.refresh_token &&
+        result.user_name
+      ) {
+        localStorage.setItem("sc_user", result.user_name);
         localStorage.setItem("sc_acc_token", result.access_token);
         localStorage.setItem("sc_ref_token", result.refresh_token);
         localStorage.setItem("sc_authenticated", true);
