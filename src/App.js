@@ -9,6 +9,7 @@ import TrustedDomains from "./components/trustedDomains";
 import UntrustedDomains from "./components/untrustedDomains";
 import PermittedUsers from "./components/permittedUsers";
 import SignOut from "./components/signOut";
+import ChooseList from "./components/chooseList";
 
 const App = () => {
   const loggedInUser = localStorage.getItem("sc_authenticated");
@@ -25,11 +26,7 @@ const routes = (
     <SideBar />
     <Routes>
       <Route path="/" element={<Home />} exact={true} />
-      <Route
-        path="/lists"
-        // element={}
-        exact={true}
-      />
+      <Route path="/lists" element={<ChooseList />} exact={true} />
       <Route
         path="/trusted_senders"
         element={<TrustedSenders />}

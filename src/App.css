@@ -88,3 +88,13 @@
 .login form {
   width: 30%;
 }
+
+.choose-list {
+  grid-column: 4 / 6;
+  grid-row: 4 / auto;
+}
+
+.title-list-page {
+  grid-column: 4 / 6;
+  grid-row: 3 / auto;
+}
