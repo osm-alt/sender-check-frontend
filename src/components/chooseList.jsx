@@ -113,7 +113,6 @@ function requestAccessibleLists(setListOwners) {
     .catch((error) => console.log("error", error));
 
   if (expired) {
-    console.log("back to the lab again");
     requestAccessibleLists();
   }
 }
