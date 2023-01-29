@@ -97,6 +97,8 @@ function sendCredentials(event, setErrorMessage, navigate) {
         result.user_name
       ) {
         localStorage.setItem("sc_user", result.user_name);
+        localStorage.setItem("sc_email", result.user_email);
+        localStorage.setItem("sc_list_owner", result.user_email); //user requests their own lists by default
         localStorage.setItem("sc_acc_token", result.access_token);
         localStorage.setItem("sc_ref_token", result.refresh_token);
         localStorage.setItem("sc_authenticated", true);

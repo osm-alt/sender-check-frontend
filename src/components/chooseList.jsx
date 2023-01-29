@@ -1,9 +1,20 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import requestNewToken from "../requestNewToken";
 
 const ChooseList = () => {
   const [listOwners, setListOwners] = useState(null);
 
+  const choose_list_owner = (key) => {
+    if (key) {
+      localStorage.setItem("sc_list_owner", key);
+    } else {
+      localStorage.setItem(
+        "sc_list_owner",
+        localStorage.getItem("sc_email").toString()
+      );
+    }
+  };
   useEffect(() => {
     requestAccessibleLists(setListOwners);
     return;
@@ -21,8 +32,18 @@ const ChooseList = () => {
           className="list-group-item list-group-item-action active"
           aria-current="true"
           data-bs-toggle="list"
+          onClick={() => {
+            choose_list_owner(null);
+          }}
         >
-          <div className="ms-2 me-auto">My list</div>
+          <div
+            className="ms-2 me-auto"
+            onClick={() => {
+              choose_list_owner(null);
+            }}
+          >
+            My list
+          </div>
         </button>
         {listOwners ? (
           listOwners.map((e) => {
@@ -33,8 +54,19 @@ const ChooseList = () => {
                 aria-current="true"
                 data-bs-toggle="list"
                 key={e}
+                id={e}
+                onClick={(e) => {
+                  choose_list_owner(e.currentTarget.id);
+                }}
               >
-                <div className="ms-2 me-auto">{e}</div>
+                <div
+                  className="ms-2 me-auto"
+                  onClick={(e) => {
+                    choose_list_owner(e.target.parentNode.id);
+                  }}
+                >
+                  {e}'s list
+                </div>
               </button>
             );
           })
@@ -59,10 +91,31 @@ function requestAccessibleLists(setListOwners) {
     redirect: "follow",
   };
 
+  let expired = false;
+
   fetch("http://localhost:4000/accessible_lists", requestOptions)
-    .then((response) => response.json())
-    .then((result) => setListOwners(result))
+    .then((response) => {
+      if (response.status === 404) {
+        console.clear();
+        return null;
+      } else if (response.status === 403) {
+        requestNewToken();
+        expired = true;
+      } else {
+        return response.json();
+      }
+    })
+    .then((result) => {
+      if (result) {
+        setListOwners(result);
+      }
+    })
     .catch((error) => console.log("error", error));
+
+  if (expired) {
+    console.log("back to the lab again");
+    requestAccessibleLists();
+  }
 }
 
 export default ChooseList;
