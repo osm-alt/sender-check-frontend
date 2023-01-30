@@ -22,7 +22,7 @@ const ChooseList = () => {
 
   return (
     <React.Fragment>
-      <div className="col-lg-6 mx-auto title-list-page mb-5">
+      <div className="col-lg-6 mx-auto title-list-page mb-4">
         <h1>Choose a list</h1>
       </div>
       {/* <SearchBar placeholder_value="Sender's name" /> */}
