@@ -13,6 +13,8 @@
   }
 }
 
+
+
 .App-header {
   background-color: #282c34;
   display: flex;
@@ -97,4 +99,16 @@
 .title-list-page {
   grid-column: 4 / 6;
   grid-row: 3 / auto;
+}
+
+@media only screen and (max-width : 600px) {
+  .sidebar {
+    width: 40vw;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .sidebar {
+    width: 280px;
+  }
 }

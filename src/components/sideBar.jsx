@@ -7,7 +7,7 @@ class SideBar extends Component {
     return (
       <div
         className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar"
-        style={{ width: 280 + "px", height: 100 + "vh" }}
+        style={{ height: 100 + "vh" }}
       >
         <NavLink
           to="/"
