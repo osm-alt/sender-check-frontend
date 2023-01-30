@@ -1,26 +1,34 @@
-import React, { Component } from "react";
+import React from "react";
 import SearchBar from "./searchBar";
 import SendersTable from "./sendersTable";
 import "../App.css";
 import requestNewToken from "../requestNewToken";
+import { useState, useEffect } from "react";
 
-class TrustedSenders extends Component {
-  state = {};
-  render() {
-    getTrustedSenders();
-    return (
-      <React.Fragment>
-        <div className="col-lg-6 mx-auto title">
-          <h1>Trusted Senders</h1>
-        </div>
-        <SearchBar placeholder_value="Sender's name" />
-        <SendersTable />
-      </React.Fragment>
-    );
-  }
-}
+const TrustedSenders = () => {
+  const [trustedSenders, setTrustedSenders] = useState(null);
 
-function getTrustedSenders() {
+  useEffect(() => {
+    getTrustedSenders(setTrustedSenders);
+    return;
+  }, [setTrustedSenders]);
+
+  return (
+    <React.Fragment>
+      <div className="col-lg-6 mx-auto title">
+        <h1>Trusted Senders</h1>
+      </div>
+      <SearchBar placeholder_value="Sender's name" />
+      {trustedSenders ? (
+        <SendersTable retrieved_list={trustedSenders} />
+      ) : (
+        <></>
+      )}
+    </React.Fragment>
+  );
+};
+
+function getTrustedSenders(setTrustedSenders) {
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -56,9 +64,9 @@ function getTrustedSenders() {
     .then((result) => {
       if (result) {
         if (result.message) {
-          console.log(result.message);
+          setTrustedSenders(result.message);
         } else {
-          console.log(result);
+          setTrustedSenders(result);
         }
       }
     })
