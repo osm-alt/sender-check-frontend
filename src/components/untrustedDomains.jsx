@@ -22,7 +22,9 @@ const UntrustedDomains = () => {
       {untrustedDomains ? (
         <DomainList retrieved_list={untrustedDomains} />
       ) : (
-        <p className="senders-table text-center">No domains retrieved yet</p>
+        <p className="senders-table text-center mt-3">
+          No domains retrieved yet
+        </p>
       )}
     </React.Fragment>
   );
