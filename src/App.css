@@ -55,7 +55,7 @@
 }
 
 .senders-table {
-  grid-column: 4 / auto;
+  grid-column: 4 / 6;
   grid-row: 5 / auto;
 }
 

@@ -22,7 +22,7 @@ const TrustedSenders = () => {
       {trustedSenders ? (
         <SendersTable retrieved_list={trustedSenders} />
       ) : (
-        <></>
+        <p className="senders-table text-center">No senders retrieved yet</p>
       )}
     </React.Fragment>
   );
