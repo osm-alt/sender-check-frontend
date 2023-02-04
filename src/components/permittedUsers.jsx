@@ -14,7 +14,7 @@ const PermittedUsers = () => {
   return (
     <React.Fragment>
       <div className="col-lg-6 mx-auto title">
-        <h1>Permitted Users</h1>
+        <h1>My List's Permitted Users</h1>
       </div>
       <SearchBar placeholder_value="Username" />
       <table className="table table-hover senders-table">
