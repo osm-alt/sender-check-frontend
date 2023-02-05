@@ -169,7 +169,7 @@ class SideBar extends Component {
             <strong>{localStorage.getItem("sc_user")}</strong>
           </NavLink>
           <ul className="dropdown-menu text-small shadow">
-            <li>
+            {/* <li>
               <NavLink className="dropdown-item" to="settings">
                 Settings
               </NavLink>
@@ -181,7 +181,7 @@ class SideBar extends Component {
             </li>
             <li>
               <hr className="dropdown-divider" />
-            </li>
+            </li> */}
             <li>
               <NavLink className="dropdown-item" to="sign_out">
                 Sign out
