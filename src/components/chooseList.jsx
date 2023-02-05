@@ -29,7 +29,13 @@ const ChooseList = () => {
       <div className="list-group choose-list">
         <button
           type="button"
-          className="list-group-item list-group-item-action active"
+          className={
+            "list-group-item list-group-item-action " +
+            (localStorage.getItem("sc_list_owner").toString() ===
+            localStorage.getItem("sc_email").toString()
+              ? "active"
+              : "")
+          }
           aria-current="true"
           data-bs-toggle="list"
           onClick={() => {
@@ -50,7 +56,12 @@ const ChooseList = () => {
             return (
               <button
                 type="button"
-                className="list-group-item list-group-item-action"
+                className={
+                  "list-group-item list-group-item-action " +
+                  (localStorage.getItem("sc_list_owner").toString() === e
+                    ? "active"
+                    : "")
+                }
                 aria-current="true"
                 data-bs-toggle="list"
                 key={e}
