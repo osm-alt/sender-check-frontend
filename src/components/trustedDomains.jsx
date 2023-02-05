@@ -54,7 +54,7 @@ function getTrustedDomains(setTrustedDomains) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken(getTrustedDomains, setTrustedDomains);
+        requestNewToken(getTrustedDomains, [setTrustedDomains]);
       } else if (response.ok) {
         return response.json();
       }

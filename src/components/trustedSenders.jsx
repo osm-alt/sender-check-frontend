@@ -7,11 +7,14 @@ import { useState, useEffect } from "react";
 
 const TrustedSenders = () => {
   const [trustedSenders, setTrustedSenders] = useState(null);
+  const [senderToAddName, setSenderToAddName] = useState(null);
+  const [senderToAddEmail, setSenderToAddEmail] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     getTrustedSenders(setTrustedSenders);
     return;
-  }, [setTrustedSenders]);
+  }, [trustedSenders]);
 
   return (
     <React.Fragment>
@@ -19,6 +22,54 @@ const TrustedSenders = () => {
         <h1>Trusted Senders</h1>
       </div>
       <SearchBar placeholder_value="Sender's name" />
+      <div className="add-item">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Sender's name"
+            aria-label="Sender's name"
+            onChange={(e) => {
+              setSenderToAddName(e.target.value);
+            }}
+          />
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Sender's email address"
+            aria-label="Sender's email address"
+            onChange={(e) => {
+              setSenderToAddEmail(e.target.value);
+            }}
+          />
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            onClick={() => {
+              addTrustedSender(
+                senderToAddName,
+                senderToAddEmail,
+                setErrorMessage,
+                getTrustedSenders,
+                setTrustedSenders
+              );
+            }}
+          >
+            Add
+          </button>
+        </div>
+        <div
+          id="errorMessage"
+          className={
+            "mb-4 text-" +
+            (errorMessage === "Successfully added" ? "success" : "danger")
+          }
+        >
+          {errorMessage}
+        </div>
+      </div>
+
       {trustedSenders ? (
         <SendersTable retrieved_list={trustedSenders} />
       ) : (
@@ -30,7 +81,7 @@ const TrustedSenders = () => {
   );
 };
 
-function getTrustedSenders(setTrustedSenders) {
+async function getTrustedSenders(setTrustedSenders) {
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -44,7 +95,7 @@ function getTrustedSenders(setTrustedSenders) {
     redirect: "follow",
   };
 
-  fetch(
+  await fetch(
     "http://localhost:4000/trusted_senders?list_owner=" +
       localStorage.getItem("sc_list_owner"),
     requestOptions
@@ -54,7 +105,7 @@ function getTrustedSenders(setTrustedSenders) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken(getTrustedSenders, setTrustedSenders);
+        requestNewToken(getTrustedSenders, [setTrustedSenders]);
       } else if (response.ok) {
         return response.json();
       }
@@ -70,6 +121,75 @@ function getTrustedSenders(setTrustedSenders) {
       }
     })
     .catch((error) => console.log("error", error));
+}
+
+async function addTrustedSender(
+  senderToAddName,
+  senderToAddEmail,
+  setErrorMessage,
+  getTrustedSenders,
+  setTrustedSenders
+) {
+  let add_button = document.getElementById("errorMessage");
+  add_button.disabled = true;
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer " + localStorage.getItem("sc_acc_token")
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    sender_name: senderToAddName,
+    sender_email: senderToAddEmail,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("http://localhost:4000/trusted_senders", requestOptions)
+    .then((response) => {
+      if (response.status === 500) {
+        console.clear();
+        return null;
+      } else if (response.status === 403) {
+        requestNewToken(addTrustedSender, [
+          senderToAddName,
+          senderToAddEmail,
+          setErrorMessage,
+          getTrustedSenders,
+          setTrustedSenders,
+        ]);
+      } else if (response.ok) {
+        return response;
+      } else if (response.status === 406) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((result) => {
+      if (result) {
+        if (result.details) {
+          setErrorMessage(
+            result.details[0].message
+              .replace(/"sender_name"/, "Sender's name")
+              .replace(/"sender_email"/, "Sender's email address")
+          );
+        } else if (result.message) {
+          setErrorMessage(result.message);
+        } else {
+          setErrorMessage("Successfully added");
+          getTrustedSenders(setTrustedSenders);
+        }
+      }
+    })
+    .catch((error) => console.log("error", error));
+
+  add_button.disabled = false;
 }
 
 export default TrustedSenders;

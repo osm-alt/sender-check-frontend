@@ -108,7 +108,7 @@ function requestAccessibleLists(setListOwners) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken(requestAccessibleLists, setListOwners);
+        requestNewToken(requestAccessibleLists, [setListOwners]);
       } else {
         return response.json();
       }

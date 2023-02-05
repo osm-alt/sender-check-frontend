@@ -54,7 +54,7 @@ function getUntrustedSenders(setUntrustedSenders) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken(getUntrustedSenders, setUntrustedSenders);
+        requestNewToken(getUntrustedSenders, [setUntrustedSenders]);
       } else if (response.ok) {
         return response.json();
       }

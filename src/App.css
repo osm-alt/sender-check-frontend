@@ -54,9 +54,14 @@
   grid-row: 4;
 }
 
+.add-item {
+  grid-column: 4/6;
+  grid-row: 5;
+}
+
 .senders-table {
   grid-column: 4 / 6;
-  grid-row: 5 / auto;
+  grid-row: 6 / auto;
 }
 
 .home {

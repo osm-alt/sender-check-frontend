@@ -54,7 +54,7 @@ function getUntrustedDomains(setUntrustedDomains) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken(getUntrustedDomains, setUntrustedDomains);
+        requestNewToken(getUntrustedDomains, [setUntrustedDomains]);
       } else if (response.ok) {
         return response.json();
       }
