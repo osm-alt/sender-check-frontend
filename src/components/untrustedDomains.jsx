@@ -44,8 +44,6 @@ function getUntrustedDomains(setUntrustedDomains) {
     redirect: "follow",
   };
 
-  let expired = false;
-
   fetch(
     "http://localhost:4000/untrusted_domains?list_owner=" +
       localStorage.getItem("sc_list_owner"),
@@ -56,8 +54,7 @@ function getUntrustedDomains(setUntrustedDomains) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken();
-        expired = true;
+        requestNewToken(getUntrustedDomains, setUntrustedDomains);
       } else if (response.ok) {
         return response.json();
       }
@@ -73,10 +70,6 @@ function getUntrustedDomains(setUntrustedDomains) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  if (expired) {
-    getUntrustedDomains();
-  }
 }
 
 export default UntrustedDomains;

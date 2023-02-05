@@ -44,8 +44,6 @@ function getUntrustedSenders(setUntrustedSenders) {
     redirect: "follow",
   };
 
-  let expired = false;
-
   fetch(
     "http://localhost:4000/untrusted_senders?list_owner=" +
       localStorage.getItem("sc_list_owner"),
@@ -56,8 +54,7 @@ function getUntrustedSenders(setUntrustedSenders) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken();
-        expired = true;
+        requestNewToken(getUntrustedSenders, setUntrustedSenders);
       } else if (response.ok) {
         return response.json();
       }
@@ -73,10 +70,6 @@ function getUntrustedSenders(setUntrustedSenders) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  if (expired) {
-    getUntrustedSenders();
-  }
 }
 
 export default UntrustedSenders;

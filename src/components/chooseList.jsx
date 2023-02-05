@@ -102,16 +102,13 @@ function requestAccessibleLists(setListOwners) {
     redirect: "follow",
   };
 
-  let expired = false;
-
   fetch("http://localhost:4000/accessible_lists", requestOptions)
     .then((response) => {
       if (response.status === 404) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken();
-        expired = true;
+        requestNewToken(requestAccessibleLists, setListOwners);
       } else {
         return response.json();
       }
@@ -122,10 +119,6 @@ function requestAccessibleLists(setListOwners) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  if (expired) {
-    requestAccessibleLists();
-  }
 }
 
 export default ChooseList;

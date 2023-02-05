@@ -64,16 +64,13 @@ function getPermittedUsers(setPermittedUsers) {
     redirect: "follow",
   };
 
-  let expired = false;
-
   fetch("http://localhost:4000/users_with_access", requestOptions)
     .then((response) => {
       if (response.status === 500) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken();
-        expired = true;
+        requestNewToken(getPermittedUsers, setPermittedUsers);
       } else if (response.ok) {
         return response.json();
       }
@@ -89,10 +86,6 @@ function getPermittedUsers(setPermittedUsers) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  if (expired) {
-    getPermittedUsers();
-  }
 }
 
 export default PermittedUsers;

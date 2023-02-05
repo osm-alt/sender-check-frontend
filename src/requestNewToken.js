@@ -1,4 +1,4 @@
-const requestNewToken = async () => {
+const requestNewToken = async (callback, callbackParam) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -24,6 +24,7 @@ const requestNewToken = async () => {
     .then((result) => {
       if (result) {
         localStorage.setItem("sc_acc_token", result.access_token);
+        callback(callbackParam);
       }
     })
     .catch((error) => console.log("error", error));

@@ -44,8 +44,6 @@ function getTrustedDomains(setTrustedDomains) {
     redirect: "follow",
   };
 
-  let expired = false;
-
   fetch(
     "http://localhost:4000/trusted_domains?list_owner=" +
       localStorage.getItem("sc_list_owner"),
@@ -56,8 +54,7 @@ function getTrustedDomains(setTrustedDomains) {
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken();
-        expired = true;
+        requestNewToken(getTrustedDomains, setTrustedDomains);
       } else if (response.ok) {
         return response.json();
       }
@@ -73,10 +70,6 @@ function getTrustedDomains(setTrustedDomains) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  if (expired) {
-    getTrustedDomains();
-  }
 }
 
 export default TrustedDomains;
