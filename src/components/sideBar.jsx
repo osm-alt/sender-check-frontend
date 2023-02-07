@@ -147,7 +147,7 @@ class SideBar extends Component {
                 width="16"
                 height="16"
               ></i>
-              Permitted Users
+              My Permitted Users
             </NavLink>
           </li>
         </ul>
