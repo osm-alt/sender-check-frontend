@@ -81,7 +81,11 @@ function sendCredentials(event, setErrorMessage, navigate) {
   };
 
   fetch("http://localhost:4000/users/login", requestOptions)
-    .then((response) => response.json())
+    .then((response) => {
+      button.disabled = false;
+
+      return response.json();
+    })
     .then((result) => {
       if (result.details) {
         setErrorMessage(
@@ -106,8 +110,6 @@ function sendCredentials(event, setErrorMessage, navigate) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  button.disabled = false;
 }
 
 export default Login;

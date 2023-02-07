@@ -135,7 +135,7 @@ async function addUntrustedSender(
   getUntrustedSenders,
   setUntrustedSenders
 ) {
-  let add_button = document.getElementById("errorMessage");
+  let add_button = document.getElementById("button-addon2");
   add_button.disabled = true;
   var myHeaders = new Headers();
   myHeaders.append(
@@ -158,6 +158,8 @@ async function addUntrustedSender(
 
   await fetch("http://localhost:4000/untrusted_senders", requestOptions)
     .then((response) => {
+      add_button.disabled = false;
+
       if (response.status === 500) {
         console.clear();
         return null;
@@ -193,8 +195,6 @@ async function addUntrustedSender(
       }
     })
     .catch((error) => console.log("error", error));
-
-  add_button.disabled = false;
 }
 
 export default UntrustedSenders;

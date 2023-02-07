@@ -129,6 +129,8 @@ function sendCredentials(event, setErrorMessage, navigate) {
 
   fetch("http://localhost:4000/users", requestOptions)
     .then((response) => {
+      button.disabled = false;
+
       if (response.status === 201) {
         navigate("/login");
         success = true;
@@ -157,8 +159,6 @@ function sendCredentials(event, setErrorMessage, navigate) {
       }
     })
     .catch((error) => console.log("error", error));
-
-  button.disabled = false;
 }
 
 export default SignUp;

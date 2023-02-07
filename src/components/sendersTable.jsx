@@ -36,7 +36,25 @@ const SendersTable = (props) => {
                         >
                           <span className="mt-1">{sender_email}</span>
                           {is_owner ? (
-                            <button className="btn btn-danger ms-2">
+                            <button
+                              className="btn btn-danger ms-2"
+                              onClick={(e) => {
+                                let senderToDeleteName =
+                                  e.target.parentNode.parentNode.parentNode
+                                    .parentNode.firstChild.firstChild
+                                    .textContent;
+                                let senderToDeleteEmail =
+                                  e.target.parentNode.firstChild.firstChild
+                                    .textContent;
+                                props.deleteTrustedSender(
+                                  senderToDeleteName,
+                                  senderToDeleteEmail,
+                                  props.setErrorMessage,
+                                  props.getTrustedSenders,
+                                  props.setTrustedSenders
+                                );
+                              }}
+                            >
                               <i
                                 className="bi pe-none bi-trash-fill"
                                 width="16"

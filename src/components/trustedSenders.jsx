@@ -9,6 +9,8 @@ const TrustedSenders = () => {
   const [trustedSenders, setTrustedSenders] = useState(null);
   const [senderToAddName, setSenderToAddName] = useState(null);
   const [senderToAddEmail, setSenderToAddEmail] = useState(null);
+  const [senderToDeleteName, setSenderToDeleteName] = useState(null);
+  const [senderToDeleteEmail, setSenderToDeleteEmail] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
@@ -76,7 +78,15 @@ const TrustedSenders = () => {
       )}
 
       {trustedSenders ? (
-        <SendersTable retrieved_list={trustedSenders} />
+        <SendersTable
+          retrieved_list={trustedSenders}
+          setSenderToDeleteName={setSenderToDeleteName}
+          setSenderToDeleteEmail={setSenderToDeleteEmail}
+          setTrustedSenders={setTrustedSenders}
+          setErrorMessage={setErrorMessage}
+          getTrustedSenders={getTrustedSenders}
+          deleteTrustedSender={deleteTrustedSender}
+        />
       ) : (
         <p className="senders-table text-center mt-3">
           No senders retrieved yet
@@ -135,7 +145,7 @@ async function addTrustedSender(
   getTrustedSenders,
   setTrustedSenders
 ) {
-  let add_button = document.getElementById("errorMessage");
+  let add_button = document.getElementById("button-addon2");
   add_button.disabled = true;
   var myHeaders = new Headers();
   myHeaders.append(
@@ -158,6 +168,8 @@ async function addTrustedSender(
 
   await fetch("http://localhost:4000/trusted_senders", requestOptions)
     .then((response) => {
+      add_button.disabled = false;
+
       if (response.status === 500) {
         console.clear();
         return null;
@@ -193,8 +205,73 @@ async function addTrustedSender(
       }
     })
     .catch((error) => console.log("error", error));
+}
 
-  add_button.disabled = false;
+async function deleteTrustedSender(
+  senderToDeleteName,
+  senderToDeleteEmail,
+  setErrorMessage,
+  getTrustedSenders,
+  setTrustedSenders
+) {
+  let delete_button = document.getElementById("button-addon2");
+  delete_button.disabled = true;
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer " + localStorage.getItem("sc_acc_token")
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    sender_name: senderToDeleteName,
+    sender_email: senderToDeleteEmail,
+  });
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("http://localhost:4000/trusted_senders", requestOptions)
+    .then((response) => {
+      delete_button.disabled = false;
+
+      if (response.status === 500) {
+        console.clear();
+        return null;
+      } else if (response.status === 403) {
+        requestNewToken(addTrustedSender, [
+          senderToDeleteName,
+          senderToDeleteEmail,
+          setErrorMessage,
+          getTrustedSenders,
+          setTrustedSenders,
+        ]);
+      } else if (response.ok) {
+        return response;
+      } else if (response.status === 406) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((result) => {
+      if (result) {
+        if (result.details) {
+          setErrorMessage(
+            result.details[0].message
+              .replace(/"sender_name"/, "Sender's name")
+              .replace(/"sender_email"/, "Sender's email address")
+          );
+        } else {
+          setErrorMessage("Successfully deleted");
+          getTrustedSenders(setTrustedSenders);
+        }
+      }
+    })
+    .catch((error) => console.log("error", error));
 }
 
 export default TrustedSenders;

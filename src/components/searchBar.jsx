@@ -17,7 +17,7 @@ class SearchBar extends Component {
         <button
           className="btn btn-outline-secondary"
           type="button"
-          id="button-addon2"
+          id="button-addon"
         >
           Search
         </button>

@@ -123,7 +123,7 @@ async function addUntrustedDomain(
   getUntrustedDomains,
   setUntrustedDomains
 ) {
-  let add_button = document.getElementById("errorMessage");
+  let add_button = document.getElementById("button-addon2");
   add_button.disabled = true;
   var myHeaders = new Headers();
   myHeaders.append(
@@ -145,6 +145,8 @@ async function addUntrustedDomain(
 
   await fetch("http://localhost:4000/untrusted_domains", requestOptions)
     .then((response) => {
+      add_button.disabled = false;
+
       if (response.status === 500) {
         console.clear();
         return null;
@@ -177,8 +179,6 @@ async function addUntrustedDomain(
       }
     })
     .catch((error) => console.log("error", error));
-
-  add_button.disabled = false;
 }
 
 export default UntrustedDomains;
