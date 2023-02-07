@@ -4,19 +4,15 @@ import { useState } from "react";
 const SendersTable = (props) => {
   const [trustedSenders, setTrustedSenders] = useState(props.retrieved_list);
 
+  const is_owner =
+    localStorage.getItem("sc_list_owner") === localStorage.getItem("sc_email");
   useEffect(() => {
     setTrustedSenders(props.retrieved_list);
     return;
   }, [props.retrieved_list]);
   return (
     <table
-      className={
-        "table table-hover senders-table" +
-        (localStorage.getItem("sc_list_owner").toString() ===
-        localStorage.getItem("sc_email")
-          ? "-owner"
-          : "")
-      }
+      className={"table table-hover senders-table" + (is_owner ? "-owner" : "")}
     >
       <thead>
         <tr>
@@ -39,14 +35,17 @@ const SendersTable = (props) => {
                           key={sender_email}
                         >
                           <span className="mt-1">{sender_email}</span>
-
-                          <button className="btn btn-danger ms-2">
-                            <i
-                              className="bi pe-none bi-trash-fill"
-                              width="16"
-                              height="16"
-                            ></i>
-                          </button>
+                          {is_owner ? (
+                            <button className="btn btn-danger ms-2">
+                              <i
+                                className="bi pe-none bi-trash-fill"
+                                width="16"
+                                height="16"
+                              ></i>
+                            </button>
+                          ) : (
+                            <></>
+                          )}
                         </li>
                       );
                     })}
