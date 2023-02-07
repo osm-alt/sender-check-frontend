@@ -14,7 +14,7 @@ const TrustedSenders = () => {
   useEffect(() => {
     getTrustedSenders(setTrustedSenders);
     return;
-  }, [trustedSenders]);
+  }, [setTrustedSenders]);
 
   return (
     <React.Fragment>

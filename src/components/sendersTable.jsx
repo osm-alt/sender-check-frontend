@@ -32,7 +32,7 @@ const SendersTable = (props) => {
                         >
                           <span className="mt-1">{sender_email}</span>
 
-                          <button className="btn btn-danger">
+                          <button className="btn btn-danger ms-2">
                             <i
                               className="bi pe-none bi-trash-fill"
                               width="16"

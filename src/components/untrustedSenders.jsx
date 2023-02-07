@@ -7,6 +7,9 @@ import { useState, useEffect } from "react";
 
 const UntrustedSenders = () => {
   const [untrustedSenders, setUntrustedSenders] = useState(null);
+  const [senderToAddName, setSenderToAddName] = useState(null);
+  const [senderToAddEmail, setSenderToAddEmail] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     getUntrustedSenders(setUntrustedSenders);
@@ -19,6 +22,54 @@ const UntrustedSenders = () => {
         <h1>Untrusted Senders</h1>
       </div>
       <SearchBar placeholder_value="Sender's name" />
+      <div className="add-item">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Sender's name"
+            aria-label="Sender's name"
+            onChange={(e) => {
+              setSenderToAddName(e.target.value);
+            }}
+          />
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Sender's email address"
+            aria-label="Sender's email address"
+            onChange={(e) => {
+              setSenderToAddEmail(e.target.value);
+            }}
+          />
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            onClick={() => {
+              addUntrustedSender(
+                senderToAddName,
+                senderToAddEmail,
+                setErrorMessage,
+                getUntrustedSenders,
+                setUntrustedSenders
+              );
+            }}
+          >
+            Add
+          </button>
+        </div>
+        <div
+          id="errorMessage"
+          className={
+            "mb-4 text-" +
+            (errorMessage === "Successfully added" ? "success" : "danger")
+          }
+        >
+          {errorMessage}
+        </div>
+      </div>
+
       {untrustedSenders ? (
         <SendersTable retrieved_list={untrustedSenders} />
       ) : (
@@ -30,7 +81,7 @@ const UntrustedSenders = () => {
   );
 };
 
-function getUntrustedSenders(setUntrustedSenders) {
+async function getUntrustedSenders(setUntrustedSenders) {
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -70,6 +121,75 @@ function getUntrustedSenders(setUntrustedSenders) {
       }
     })
     .catch((error) => console.log("error", error));
+}
+
+async function addUntrustedSender(
+  senderToAddName,
+  senderToAddEmail,
+  setErrorMessage,
+  getUntrustedSenders,
+  setUntrustedSenders
+) {
+  let add_button = document.getElementById("errorMessage");
+  add_button.disabled = true;
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer " + localStorage.getItem("sc_acc_token")
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    sender_name: senderToAddName,
+    sender_email: senderToAddEmail,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("http://localhost:4000/untrusted_senders", requestOptions)
+    .then((response) => {
+      if (response.status === 500) {
+        console.clear();
+        return null;
+      } else if (response.status === 403) {
+        requestNewToken(addUntrustedSender, [
+          senderToAddName,
+          senderToAddEmail,
+          setErrorMessage,
+          getUntrustedSenders,
+          setUntrustedSenders,
+        ]);
+      } else if (response.ok) {
+        return response;
+      } else if (response.status === 406) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((result) => {
+      if (result) {
+        if (result.details) {
+          setErrorMessage(
+            result.details[0].message
+              .replace(/"sender_name"/, "Sender's name")
+              .replace(/"sender_email"/, "Sender's email address")
+          );
+        } else if (result.message) {
+          setErrorMessage(result.message);
+        } else {
+          setErrorMessage("Successfully added");
+          getUntrustedSenders(setUntrustedSenders);
+        }
+      }
+    })
+    .catch((error) => console.log("error", error));
+
+  add_button.disabled = false;
 }
 
 export default UntrustedSenders;
