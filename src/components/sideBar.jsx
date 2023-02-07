@@ -159,13 +159,14 @@ class SideBar extends Component {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
+            {/* <img
               src="https://github.com/mdo.png"
               alt=""
               width="32"
               height="32"
               className="rounded-circle me-2"
-            />
+            /> */}
+            <i className="bi bi-person-circle me-2"></i>
             <strong>{localStorage.getItem("sc_user")}</strong>
           </NavLink>
           <ul className="dropdown-menu text-small shadow">
