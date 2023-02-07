@@ -9,7 +9,15 @@ const SendersTable = (props) => {
     return;
   }, [props.retrieved_list]);
   return (
-    <table className="table table-hover senders-table">
+    <table
+      className={
+        "table table-hover senders-table" +
+        (localStorage.getItem("sc_list_owner").toString() ===
+        localStorage.getItem("sc_email")
+          ? "-owner"
+          : "")
+      }
+    >
       <thead>
         <tr>
           <th>Sender name</th>

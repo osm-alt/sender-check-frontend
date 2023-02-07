@@ -59,9 +59,14 @@
   grid-row: 5;
 }
 
-.senders-table {
+.senders-table-owner {
   grid-column: 4 / 6;
   grid-row: 6 / auto;
+}
+
+.senders-table {
+  grid-column: 4 / 6;
+  grid-row: 5 / auto;
 }
 
 .home {

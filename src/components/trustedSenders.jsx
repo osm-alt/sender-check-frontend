@@ -22,53 +22,58 @@ const TrustedSenders = () => {
         <h1>Trusted Senders</h1>
       </div>
       <SearchBar placeholder_value="Sender's name" />
-      <div className="add-item">
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Sender's name"
-            aria-label="Sender's name"
-            onChange={(e) => {
-              setSenderToAddName(e.target.value);
-            }}
-          />
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Sender's email address"
-            aria-label="Sender's email address"
-            onChange={(e) => {
-              setSenderToAddEmail(e.target.value);
-            }}
-          />
-          <button
-            className="btn btn-outline-secondary"
-            type="button"
-            id="button-addon2"
-            onClick={() => {
-              addTrustedSender(
-                senderToAddName,
-                senderToAddEmail,
-                setErrorMessage,
-                getTrustedSenders,
-                setTrustedSenders
-              );
-            }}
+      {localStorage.getItem("sc_list_owner").toString() ===
+      localStorage.getItem("sc_email") ? (
+        <div className="add-item">
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Sender's name"
+              aria-label="Sender's name"
+              onChange={(e) => {
+                setSenderToAddName(e.target.value);
+              }}
+            />
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Sender's email address"
+              aria-label="Sender's email address"
+              onChange={(e) => {
+                setSenderToAddEmail(e.target.value);
+              }}
+            />
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+              onClick={() => {
+                addTrustedSender(
+                  senderToAddName,
+                  senderToAddEmail,
+                  setErrorMessage,
+                  getTrustedSenders,
+                  setTrustedSenders
+                );
+              }}
+            >
+              Add
+            </button>
+          </div>
+          <div
+            id="errorMessage"
+            className={
+              "mb-4 text-" +
+              (errorMessage === "Successfully added" ? "success" : "danger")
+            }
           >
-            Add
-          </button>
+            {errorMessage}
+          </div>
         </div>
-        <div
-          id="errorMessage"
-          className={
-            "mb-4 text-" +
-            (errorMessage === "Successfully added" ? "success" : "danger")
-          }
-        >
-          {errorMessage}
-        </div>
-      </div>
+      ) : (
+        <></>
+      )}
 
       {trustedSenders ? (
         <SendersTable retrieved_list={trustedSenders} />
