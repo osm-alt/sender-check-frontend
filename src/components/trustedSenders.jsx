@@ -239,7 +239,7 @@ async function deleteTrustedSender(
         console.clear();
         return null;
       } else if (response.status === 403) {
-        requestNewToken(addTrustedSender, [
+        requestNewToken(deleteTrustedSender, [
           senderToDeleteName,
           senderToDeleteEmail,
           setErrorMessage,
