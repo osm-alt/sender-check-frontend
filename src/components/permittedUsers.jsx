@@ -1,12 +1,20 @@
 import React from "react";
 import SearchBar from "./searchBar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import requestNewToken from "../requestNewToken";
 
 const PermittedUsers = () => {
   const [permittedUsers, setPermittedUsers] = useState(null);
   const [userToAdd, setUserToAdd] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [query, setQuery] = useState("");
+
+  const filteredItems = useMemo(() => {
+    if (!permittedUsers) return;
+    return permittedUsers.filter((item) => {
+      return item.toLowerCase().includes(query.toLowerCase());
+    });
+  }, [permittedUsers, query]);
 
   useEffect(() => {
     getPermittedUsers(setPermittedUsers);
@@ -18,7 +26,11 @@ const PermittedUsers = () => {
       <div className="col-lg-6 mx-auto title">
         <h2>My List's Permitted Users</h2>
       </div>
-      <SearchBar placeholder_value="User's email" />
+      <SearchBar
+        placeholder_value="Search by user's email"
+        query={query}
+        setQuery={setQuery}
+      />
       <div className="add-item">
         <div className="input-group mb-3">
           <input
@@ -63,8 +75,8 @@ const PermittedUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {permittedUsers ? (
-            permittedUsers.map((permitted_user) => {
+          {filteredItems ? (
+            filteredItems.map((permitted_user) => {
               return (
                 <tr key={permitted_user + "_row"}>
                   <td className="d-flex justify-content-between align-items-start">

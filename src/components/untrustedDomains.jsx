@@ -22,7 +22,7 @@ const UntrustedDomains = () => {
         <h1>Untrusted Domains</h1>
       </div>
       <SearchBar
-        placeholder_value="Email domain name"
+        placeholder_value="Search by email domain name"
         query={query}
         setQuery={setQuery}
       />
