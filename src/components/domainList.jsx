@@ -29,7 +29,18 @@ const DomainList = (props) => {
                 <td className="d-flex justify-content-between align-items-start">
                   <span className="mt-1">{domain}</span>
                   {is_owner ? (
-                    <button className="ms-5 btn btn-danger">
+                    <button
+                      className="ms-5 btn btn-danger"
+                      onClick={(e) => {
+                        let domainToDelete = e.target.parentNode.textContent;
+                        props.deleteDomain(
+                          domainToDelete,
+                          props.setErrorMessage,
+                          props.getDomains,
+                          props.setDomains
+                        );
+                      }}
+                    >
                       <i
                         className="bi pe-none bi-trash-fill"
                         width="16"
