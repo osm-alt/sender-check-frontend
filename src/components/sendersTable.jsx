@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const SendersTable = (props) => {
   const [trustedSenders, setTrustedSenders] = useState(props.retrieved_list);
+  const query = props.query;
+
+  const filteredItems = useMemo(() => {
+    if (!trustedSenders) return;
+    return Object.keys(trustedSenders).filter((item) => {
+      return item.toLowerCase().includes(query.toLowerCase());
+    });
+  }, [trustedSenders, query]);
 
   const is_owner =
     localStorage.getItem("sc_list_owner") === localStorage.getItem("sc_email");
@@ -21,8 +29,8 @@ const SendersTable = (props) => {
         </tr>
       </thead>
       <tbody>
-        {trustedSenders ? (
-          Object.keys(trustedSenders).map((sender_name) => {
+        {filteredItems ? (
+          filteredItems.map((sender_name) => {
             return (
               <tr key={sender_name + "_row"}>
                 <td>{sender_name.replace("(dot)", ".")}</td>
