@@ -9,8 +9,6 @@ const TrustedSenders = () => {
   const [trustedSenders, setTrustedSenders] = useState(null);
   const [senderToAddName, setSenderToAddName] = useState(null);
   const [senderToAddEmail, setSenderToAddEmail] = useState(null);
-  const [senderToDeleteName, setSenderToDeleteName] = useState(null);
-  const [senderToDeleteEmail, setSenderToDeleteEmail] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
@@ -80,12 +78,10 @@ const TrustedSenders = () => {
       {trustedSenders ? (
         <SendersTable
           retrieved_list={trustedSenders}
-          setSenderToDeleteName={setSenderToDeleteName}
-          setSenderToDeleteEmail={setSenderToDeleteEmail}
-          setTrustedSenders={setTrustedSenders}
+          setSenders={setTrustedSenders}
           setErrorMessage={setErrorMessage}
-          getTrustedSenders={getTrustedSenders}
-          deleteTrustedSender={deleteTrustedSender}
+          getSenders={getTrustedSenders}
+          deleteSender={deleteTrustedSender}
         />
       ) : (
         <p className="senders-table text-center mt-3">

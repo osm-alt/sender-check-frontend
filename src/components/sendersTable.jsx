@@ -46,12 +46,12 @@ const SendersTable = (props) => {
                                 let senderToDeleteEmail =
                                   e.target.parentNode.firstChild.firstChild
                                     .textContent;
-                                props.deleteTrustedSender(
+                                props.deleteSender(
                                   senderToDeleteName,
                                   senderToDeleteEmail,
                                   props.setErrorMessage,
-                                  props.getTrustedSenders,
-                                  props.setTrustedSenders
+                                  props.getSenders,
+                                  props.setSenders
                                 );
                               }}
                             >
