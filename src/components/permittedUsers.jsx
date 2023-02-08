@@ -69,7 +69,18 @@ const PermittedUsers = () => {
                 <tr key={permitted_user + "_row"}>
                   <td className="d-flex justify-content-between align-items-start">
                     <span className="mt-1">{permitted_user}</span>
-                    <button className="ms-5 btn btn-danger">
+                    <button
+                      className="ms-5 btn btn-danger"
+                      onClick={(e) => {
+                        let userToDelete = e.target.parentNode.textContent;
+                        deletePermittedUser(
+                          userToDelete,
+                          setErrorMessage,
+                          getPermittedUsers,
+                          setPermittedUsers
+                        );
+                      }}
+                    >
                       <i
                         className="bi pe-none bi-trash-fill"
                         width="16"
@@ -184,6 +195,68 @@ async function addPermittedUser(
           setErrorMessage(result.message);
         } else {
           setErrorMessage("Successfully added");
+          getPermittedUsers(setPermittedUsers);
+        }
+      }
+    })
+    .catch((error) => console.log("error", error));
+}
+
+async function deletePermittedUser(
+  userToDelete,
+  setErrorMessage,
+  getPermittedUsers,
+  setPermittedUsers
+) {
+  let delete_button = document.getElementById("button-addon2");
+  delete_button.disabled = true;
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer " + localStorage.getItem("sc_acc_token")
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    user_email: userToDelete,
+  });
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("http://localhost:4000/users_with_access", requestOptions)
+    .then((response) => {
+      delete_button.disabled = false;
+
+      if (response.status === 500) {
+        console.clear();
+        return null;
+      } else if (response.status === 403) {
+        requestNewToken(deletePermittedUser, [
+          userToDelete,
+          setErrorMessage,
+          getPermittedUsers,
+          setPermittedUsers,
+        ]);
+      } else if (response.ok) {
+        return response;
+      } else if (response.status === 406) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((result) => {
+      if (result) {
+        if (result.details) {
+          setErrorMessage(
+            result.details[0].message.replace(/"user_email"/, "User email")
+          );
+        } else {
+          setErrorMessage("Successfully deleted");
           getPermittedUsers(setPermittedUsers);
         }
       }
