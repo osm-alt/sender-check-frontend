@@ -9,6 +9,7 @@ const TrustedDomains = () => {
   const [trustedDomains, setTrustedDomains] = useState(null);
   const [domainToAdd, setDomainToAdd] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     getTrustedDomains(setTrustedDomains);
@@ -20,7 +21,11 @@ const TrustedDomains = () => {
       <div className="col-lg-6 mx-auto title">
         <h1>Trusted Domains</h1>
       </div>
-      <SearchBar placeholder_value="Email domain name" />
+      <SearchBar
+        placeholder_value="Search by email domain name"
+        query={query}
+        setQuery={setQuery}
+      />
       {localStorage.getItem("sc_list_owner").toString() ===
       localStorage.getItem("sc_email") ? (
         <div className="add-item">
@@ -70,6 +75,7 @@ const TrustedDomains = () => {
           setErrorMessage={setErrorMessage}
           getDomains={getTrustedDomains}
           deleteDomain={deleteTrustedDomain}
+          query={query}
         />
       ) : (
         <p className="senders-table text-center mt-3">

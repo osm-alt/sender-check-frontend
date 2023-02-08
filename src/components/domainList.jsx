@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const DomainList = (props) => {
   const [trustedDomains, setTrustedDomains] = useState(props.retrieved_list);
+  const query = props.query;
+
+  const filteredItems = useMemo(() => {
+    if (!trustedDomains) return;
+    return trustedDomains.filter((item) => {
+      return item.toLowerCase().includes(query.toLowerCase());
+    });
+  }, [trustedDomains, query]);
 
   const is_owner =
     localStorage.getItem("sc_list_owner") === localStorage.getItem("sc_email");
@@ -22,8 +30,8 @@ const DomainList = (props) => {
         </tr>
       </thead>
       <tbody>
-        {trustedDomains ? (
-          trustedDomains.map((domain) => {
+        {filteredItems ? (
+          filteredItems.map((domain) => {
             return (
               <tr key={domain + "_row"}>
                 <td className="d-flex justify-content-between align-items-start">
