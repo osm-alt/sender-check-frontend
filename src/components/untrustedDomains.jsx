@@ -65,7 +65,13 @@ const UntrustedDomains = () => {
       )}
 
       {untrustedDomains ? (
-        <DomainList retrieved_list={untrustedDomains} />
+        <DomainList
+          retrieved_list={untrustedDomains}
+          setDomains={setUntrustedDomains}
+          setErrorMessage={setErrorMessage}
+          getDomains={getUntrustedDomains}
+          deleteDomain={deleteUntrustedDomain}
+        />
       ) : (
         <p className="senders-table text-center mt-3">
           No domains retrieved yet
@@ -174,6 +180,68 @@ async function addUntrustedDomain(
           setErrorMessage(result.message);
         } else {
           setErrorMessage("Successfully added");
+          getUntrustedDomains(setUntrustedDomains);
+        }
+      }
+    })
+    .catch((error) => console.log("error", error));
+}
+
+async function deleteUntrustedDomain(
+  domainToDelete,
+  setErrorMessage,
+  getUntrustedDomains,
+  setUntrustedDomains
+) {
+  let delete_button = document.getElementById("button-addon2");
+  delete_button.disabled = true;
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer " + localStorage.getItem("sc_acc_token")
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    domain: domainToDelete,
+  });
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("http://localhost:4000/untrusted_domains", requestOptions)
+    .then((response) => {
+      delete_button.disabled = false;
+
+      if (response.status === 500) {
+        console.clear();
+        return null;
+      } else if (response.status === 403) {
+        requestNewToken(deleteUntrustedDomain, [
+          domainToDelete,
+          setErrorMessage,
+          getUntrustedDomains,
+          setUntrustedDomains,
+        ]);
+      } else if (response.ok) {
+        return response;
+      } else if (response.status === 406) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((result) => {
+      if (result) {
+        if (result.details) {
+          setErrorMessage(
+            result.details[0].message.replace(/"domain"/, "Domain")
+          );
+        } else {
+          setErrorMessage("Successfully deleted");
           getUntrustedDomains(setUntrustedDomains);
         }
       }
