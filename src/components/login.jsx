@@ -39,7 +39,7 @@ const Login = () => {
             id="floatingPassword"
             placeholder="Password"
             name="password"
-            minLength={5}
+            minLength={8}
             required
           />
           <label htmlFor="floatingPassword">Password</label>

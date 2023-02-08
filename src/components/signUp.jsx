@@ -63,7 +63,7 @@ const SignUp = () => {
             id="floatingPassword"
             placeholder="Password"
             name="password"
-            minLength={5}
+            minLength={8}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -78,7 +78,7 @@ const SignUp = () => {
             id="floatingRetypePassword"
             placeholder="Re-type password"
             name="retype_password"
-            minLength={5}
+            minLength={8}
             onChange={(e) => {
               if (e.target.value !== password) {
                 setErrorMessage("Passwords do not match");
