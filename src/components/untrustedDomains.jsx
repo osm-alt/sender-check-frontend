@@ -9,6 +9,7 @@ const UntrustedDomains = () => {
   const [untrustedDomains, setUntrustedDomains] = useState(null);
   const [domainToAdd, setDomainToAdd] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     getUntrustedDomains(setUntrustedDomains);
@@ -20,7 +21,11 @@ const UntrustedDomains = () => {
       <div className="col-lg-6 mx-auto title">
         <h1>Untrusted Domains</h1>
       </div>
-      <SearchBar placeholder_value="Email domain name" />
+      <SearchBar
+        placeholder_value="Email domain name"
+        query={query}
+        setQuery={setQuery}
+      />
       {localStorage.getItem("sc_list_owner").toString() ===
       localStorage.getItem("sc_email") ? (
         <div className="add-item">
@@ -71,6 +76,7 @@ const UntrustedDomains = () => {
           setErrorMessage={setErrorMessage}
           getDomains={getUntrustedDomains}
           deleteDomain={deleteUntrustedDomain}
+          query={query}
         />
       ) : (
         <p className="senders-table text-center mt-3">
