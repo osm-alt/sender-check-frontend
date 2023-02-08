@@ -10,6 +10,7 @@ const UntrustedSenders = () => {
   const [senderToAddName, setSenderToAddName] = useState(null);
   const [senderToAddEmail, setSenderToAddEmail] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     getUntrustedSenders(setUntrustedSenders);
@@ -21,7 +22,11 @@ const UntrustedSenders = () => {
       <div className="col-lg-6 mx-auto title">
         <h1>Untrusted Senders</h1>
       </div>
-      <SearchBar placeholder_value="Sender's name" />
+      <SearchBar
+        placeholder_value="Search by sender's name"
+        query={query}
+        setQuery={setQuery}
+      />
       {localStorage.getItem("sc_list_owner").toString() ===
       localStorage.getItem("sc_email") ? (
         <div className="add-item">
@@ -82,6 +87,7 @@ const UntrustedSenders = () => {
           setErrorMessage={setErrorMessage}
           getSenders={getUntrustedSenders}
           deleteSender={deleteUntrustedSender}
+          query={query}
         />
       ) : (
         <p className="senders-table text-center mt-3">
