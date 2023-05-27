@@ -16,8 +16,7 @@ class Home extends Component {
           <div className="col-lg-6 mx-auto">
             <p className="lead mb-4">
               SenderCheck helps you protect yourself from email fraudsters as
-              you view your emails on Chrome using Outlook, Gmail, or Yahoo
-              Mail.
+              you view your emails on Chrome using Outlook or Gmail.
             </p>
             <p className="lead mb-4">
               You can also give others read-only access to your trusted and
